@@ -16,6 +16,9 @@
   "keywords": [
     "downloader"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "molychn",
   "license": "ISC",
   "bugs": {
