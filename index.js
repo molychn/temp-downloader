@@ -11,7 +11,10 @@ const validateDest = require('./utils/validate-dest');
 // const getTemplatePath = localPath.getTemplatePath;
 
 // 提示命令行用法
-program.usage('<template-name> [project-name]').option('-d, --domain <d>', 'change your repo domain');
+program
+  .version('1.0.0', '-v, -V', 'output the current version')
+  .usage('<template-name> <project-name>')
+  .option('-d, --domain <d>', 'change your repo domain');
 // 解析program
 program.parse();
 
