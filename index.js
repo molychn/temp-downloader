@@ -3,17 +3,14 @@ const download = require('download-git-repo');
 const ora = require('ora');
 // const fs = require('fs');
 const path = require('path');
+const packageData = require('./package.json');
 
 const validateDest = require('./utils/validate-dest');
-// const localPath = require('./utils/local-path');
-
-// const isLocalPath = localPath.isLocalPath;
-// const getTemplatePath = localPath.getTemplatePath;
 
 // 提示命令行用法
 program
-  .version('1.0.0', '-v, -V', 'output the current version')
-  .usage('<template-name> <project-name>')
+  .version(packageData.version, '-v, -V', 'output the current version')
+  .usage('[template-name] <project-name>')
   .option('-d, --domain <d>', 'change your repo domain');
 // 解析program
 program.parse();
@@ -37,12 +34,13 @@ if (args.length < 2) {
 }
 
 if (validateDest(dest)) {
-  console.log('file path exist');
+  console.log('file path exist, check your project dirname please');
   return;
 }
 
 const spinner = ora('downloading template');
 spinner.start();
 download(repo, dest, { clone: true }, (err) => {
-  spinner.stop();
+  if (err) return err;
+  spinner.stop(`cd ${args[0]} and npm or pnpm install`);
 });
